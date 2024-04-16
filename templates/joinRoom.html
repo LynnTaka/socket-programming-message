@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Room</title>
+  <style>
+    body {
+      background-color: rgb(49,48,52);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding-top: 40px;
+    }
+
+    .container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px;
+      background-color: rgb(69,55,113);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .back-button:hover {
+      background-color: rgb(134,77,234);
+    }
+
+    .input-field {
+      margin: 20px 0; 
+      padding: 10px;
+      width: 500px; 
+      height: 50px; 
+      max-width: 400px; 
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      background-color: rgba(255, 255, 255, 0.5); 
+      text-align: center; 
+    }
+
+    .button {
+        background-color: rgb(69,55,113);
+        margin: 20px 0; 
+        padding: 10px 20px;
+        width: 300px; 
+        height: 50px; 
+        max-width: 300px; 
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .button:hover {
+      background-color: rgb(134,77,234);
+    }
+
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">Back</button>
+  <div class="container">
+    <input type="text" class="input-field" placeholder="ENTER ROOM CODE">
+    <input type="text" class="input-field" placeholder="ENTER USERNAME">
+    <button class="button">Join Room</button>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
