@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
 import random
 from string import ascii_uppercase
+from aes_encrypton import *
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
@@ -62,12 +63,18 @@ def message(data):
     if room not in rooms:
         return 
     
+    key = session.get("room")
+    message = data['data']
+
+    encrypted_message = encrypt_message(key, message)
+    decrypted_message = decrypt_message(key, encrypted_message)
+
     content = {
         "name": session.get("name"),
-        "message": data["data"]
+        "message": decrypted_message
     }
     send(content, to=room)
-    rooms[room]["messages"].append(content)
+    rooms[room]["messages"].append(encrypted_message)
     print(f"{session.get('name')} said: {data['data']}")
 
 @socketio.on("connect")
