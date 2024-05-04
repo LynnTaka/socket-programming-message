@@ -78,9 +78,11 @@
 <body>
   <button class="back-button" onclick="goBack()">&larr;</button>
   <div class="container">
-    <input type="text" class="input-field" placeholder="ENTER ROOM CODE">
-    <input type="text" class="input-field" placeholder="ENTER USERNAME">
+    <form action="/joinRoom" method="POST">
+    <input type="text" name="code" class="input-field" placeholder="ENTER ROOM CODE">
+    <input type="text" name="name" class="input-field" placeholder="ENTER USERNAME">
     <button class="button">Join Room</button>
+    </form>
   </div>
 
   <script>

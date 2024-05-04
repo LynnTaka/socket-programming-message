@@ -76,11 +76,12 @@
 </head>
 <body>
   <button class="back-button" onclick="goBack()">&larr;</button>
-  <div class="container">
-    <input type="text" class="input-field" placeholder="ENTER USERNAME">
-    <button class="button">Create Room</button>
-  </div>
-
+  <form action="/joinRoom" method="POST">
+    <div class="container">
+      <input type="text" name="name" class="input-field" placeholder="Enter Username">
+      <button class="button" type="submit">Create Room</button>
+    </div>
+  </form>
   <script>
     function goBack() {
       window.history.back();

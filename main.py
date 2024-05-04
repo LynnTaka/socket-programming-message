@@ -21,39 +21,80 @@ def generate_unique_code(length):
     
     return code
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/", methods=["GET"])
 def home():
     session.clear()
+    # if request.method == "POST":
+    #     name = request.form.get("name")
+    #     code = request.form.get("code")
+    #     join = request.form.get("join", False)
+    #     create = request.form.get("create", False)
+    #
+    #     if not name:
+    #         return render_template("welcome.html", error="Please enter a name.", code=code, name=name)
+    #
+    #     if join != False and not code:
+    #         return render_template("joinRoom.html", error="Please enter a room code.", code=code, name=name)
+    #
+    #     room = code
+    #     if create != False:
+    #         room = generate_unique_code(4)
+    #         rooms[room] = {"members": 0, "messages": []}
+    #     elif code not in rooms:
+    #         return render_template("/joinRoom.html", error="Room does not exist.", code=code, name=name)
+    #
+    #     session["room"] = room
+    #     session["name"] = name
+    #     return redirect(url_for("room"))
+
+    return render_template("welcome.html")
+
+@app.route("/createRoom", methods=["GET", "POST"])
+def createroom():
     if request.method == "POST":
         name = request.form.get("name")
         code = request.form.get("code")
-        join = request.form.get("join", False)
         create = request.form.get("create", False)
 
         if not name:
-            return render_template("home.html", error="Please enter a name.", code=code, name=name)
-
-        if join != False and not code:
-            return render_template("home.html", error="Please enter a room code.", code=code, name=name)
-        
-        room = code
+            return render_template("createRoom.html", error="Please enter a name.", code=code, name=name)
         if create != False:
             room = generate_unique_code(4)
             rooms[room] = {"members": 0, "messages": []}
         elif code not in rooms:
-            return render_template("home.html", error="Room does not exist.", code=code, name=name)
-        
+            return render_template("createRoom.html", error="Room does not exist.", code=code, name=name)
+        session["room"] = room
+        session["name"] = name
+        return redirect(url_for("room.html"))
+    return render_template("createRoom.html")
+
+@app.route("/joinRoom", methods=["GET", "POST"])
+def joinroom():
+    if request.method == "POST":
+        name = request.form.get("name")
+        code = request.form.get("code")
+        join = request.form.get("join", False)
+
+        if not name:
+            return render_template("joinRoom.html", error="Please enter a name.", code=code, name=name)
+
+        if join != False and not code:
+            return render_template("joinRoom.html", error="Please enter a room code.", code=code, name=name)
+
+        room = code
+        if code not in rooms:
+            return render_template("joinRoom.html", error="Room does not exist.", code=code, name=name)
+
         session["room"] = room
         session["name"] = name
         return redirect(url_for("room"))
+    return render_template("joinRoom.html")
 
-    return render_template("home.html")
-
-@app.route("/room")
+@app.route("/room", methods=["GET", "POST"])
 def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
-        return redirect(url_for("home"))
+        return redirect(url_for("welcome"))
 
     return render_template("room.html", code=room, messages=rooms[room]["messages"])
 
