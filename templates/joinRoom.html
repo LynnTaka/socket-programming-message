@@ -79,9 +79,15 @@
   <button class="back-button" onclick="goBack()">&larr;</button>
   <div class="container">
     <form action="/joinRoom" method="POST">
-    <input type="text" name="code" class="input-field" placeholder="ENTER ROOM CODE">
-    <input type="text" name="name" class="input-field" placeholder="ENTER USERNAME">
-    <button class="button">Join Room</button>
+      <div class="input-group">
+        <input type="text" name="code" class="input-field" placeholder="ENTER ROOM CODE">
+      </div>
+      <div class="input-group">
+        <input type="text" name="name" class="input-field" placeholder="ENTER USERNAME">
+      </div>
+      <div class="button-group">
+        <button class="button">Join Room</button>
+      </div>
     </form>
   </div>
 

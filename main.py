@@ -53,19 +53,19 @@ def home():
 def createroom():
     if request.method == "POST":
         name = request.form.get("name")
-        code = request.form.get("code")
-        create = request.form.get("create", False)
 
         if not name:
-            return render_template("createRoom.html", error="Please enter a name.", code=code, name=name)
+            return render_template("createRoom.html", error="Please enter a name.", name=name)
+
+        create = request.form.get("create")
         if create != False:
             room = generate_unique_code(4)
             rooms[room] = {"members": 0, "messages": []}
-        elif code not in rooms:
-            return render_template("createRoom.html", error="Room does not exist.", code=code, name=name)
+
         session["room"] = room
         session["name"] = name
-        return redirect(url_for("room.html"))
+        return redirect(url_for("room"))
+
     return render_template("createRoom.html")
 
 @app.route("/joinRoom", methods=["GET", "POST"])
@@ -73,12 +73,11 @@ def joinroom():
     if request.method == "POST":
         name = request.form.get("name")
         code = request.form.get("code")
-        join = request.form.get("join", False)
 
         if not name:
             return render_template("joinRoom.html", error="Please enter a name.", code=code, name=name)
 
-        if join != False and not code:
+        if not code:
             return render_template("joinRoom.html", error="Please enter a room code.", code=code, name=name)
 
         room = code
@@ -115,6 +114,7 @@ def message(data):
         "message": decrypted_message
     }
     send(content, to=room)
+    print(encrypted_message)
     rooms[room]["messages"].append(encrypted_message)
     print(f"{session.get('name')} said: {data['data']}")
 
@@ -148,4 +148,4 @@ def disconnect():
     print(f"{name} has left the room {room}")
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
