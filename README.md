@@ -5,7 +5,7 @@ Messaging app using Flask and SocketIO
 **Clone and start venv**
 ```
 git clone https://github.com/LynnTaka/socket-programming-message
-cd socket socket-programming-message
+cd socket-programming-message
 python3 -m venv .venv
 . .venv/bin/activate
 ```
